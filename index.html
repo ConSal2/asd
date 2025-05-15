@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>Абай сауалнамасы</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Абай Құнанбайұлы туралы сауалнама ✨</h1>
+        
+        <form id="quizForm">
+            <div class="question">
+                <h3>1. Абайдың қандай шығармасы прозалық жанрда жазылған?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="wrong"> А) Өлеңдер</label>
+                    <label><input type="radio" name="q1" value="correct"> Б) Қара сөздер</label>
+                    <label><input type="radio" name="q1" value="wrong"> В) Пьесалар</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. Абай қандай орыс ақынының шығармаларын аударған?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="correct"> А) Пушкин</label>
+                    <label><input type="radio" name="q2" value="wrong"> Б) Достоевский</label>
+                    <label><input type="radio" name="q2" value="wrong"> В) Толстой</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. "Қыс" өлеңінде қыстың бейнесін қалай сипаттайды?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="wrong"> А) Жас бала</label>
+                    <label><input type="radio" name="q3" value="correct"> Б) Ақ киімді шал</label>
+                    <label><input type="radio" name="q3" value="wrong"> В) Әдемі әйел</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>4. Абайдың еңбектеріндегі басты тақырып:</h3>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="wrong"> А) Билік</label>
+                    <label><input type="radio" name="q4" value="correct"> Б) Адамгершілік пен білім</label>
+                    <label><input type="radio" name="q4" value="wrong"> В) Соғыс</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>5. Абайдың әкесінің есімі:</h3>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="wrong"> А) Ибрагим</label>
+                    <label><input type="radio" name="q5" value="correct"> Б) Құнанбай</label>
+                    <label><input type="radio" name="q5" value="wrong"> В) Шәкәрім</label>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" disabled>Нәтижелерді көрсету ⚡</button>
+        </form>
+
+        <div class="result" id="result"></div>
+        <button onclick="location.reload()" style="display: none;" id="retryBtn">Қайта бастау 🔄</button>
+    </div>
+
+    <div class="footer">🤖 Жасаған ЖИ</div>
+
+    <script>
+        const form = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const retryBtn = document.getElementById('retryBtn');
+
+        form.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', () => {
+                const allAnswered = document.querySelectorAll('.question').length === 
+                    document.querySelectorAll('input:checked').length;
+                submitBtn.disabled = !allAnswered;
+            });
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let score = 0;
+            const answers = {
+                q1: 'correct',
+                q2: 'correct',
+                q3: 'correct',
+                q4: 'correct',
+                q5: 'correct'
+            };
+
+            Object.keys(answers).forEach(q => {
+                if (form[q].value === answers[q]) score++;
+            });
+
+            const results = {
+                5: 'Тамаша! 🌟 5/5',
+                4: 'Керемет! 💎 4/5',
+                3: 'Жақсы! ✨ 3/5',
+                2: 'Орташа 🌀 2/5',
+                1: 'Қайта оқып көр 📚 1/5'
+            };
+
+            form.style.display = 'none';
+            resultDiv.style.display = 'block';
+            retryBtn.style.display = 'block';
+            resultDiv.innerHTML = `<div style="font-size: 3rem">${results[score]}</div>`;
+        });
+    </script>
+</body>
+</html>
